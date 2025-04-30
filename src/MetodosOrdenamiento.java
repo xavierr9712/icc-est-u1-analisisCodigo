@@ -49,8 +49,10 @@ public class MetodosOrdenamiento {
     }
 
     // Método de burbuja tradicional con errores
-    // Error encontrado:El bucle interno recorría todo el arreglo en cada iteración del bucle externo- for (int j = 0; j < n ; j++) {
-    // solucion:ajustó el límite del bucle interno a (n - i - 1) para evitar comparaciones innecesarias y el error de índice.
+    // Error encontrado:El bucle interno recorría todo el arreglo en 
+    // cada iteración del bucle externo- for (int j = 0; j < n ; j++) {
+    // solucion:ajustó el límite del bucle interno a (n - i - 1) para 
+    // evitar comparaciones innecesarias y el error de índice.
     public int[] burbujaTradicionalTercero(int[] arregloOriginal) {
 
         int[] arreglo = Arrays.copyOf(arregloOriginal, arregloOriginal.length);
@@ -141,7 +143,8 @@ public class MetodosOrdenamiento {
 
     // Método de inserción con errores
     // Error encontrado:
-    // En while era i > 0 no se comparara correctamente el primer elemento y el  while estaba ordenando de forma descendente (arreglo[i] < key).
+    // En while era i > 0 no se comparara correctamente el primer elemento 
+    // y el  while estaba ordenando de forma descendente (arreglo[i] < key).
     // Solucion: correguimos while a i >= 0 y correguimos while a arreglo[i] > key para ordenar ascendentemente.
     public int[] insercionPrimero(int[] arregloOriginal) {
 
@@ -160,7 +163,15 @@ public class MetodosOrdenamiento {
     }
 
     // Método de inserción con errores
-    // Error encontrado:
+    // Error encontrado: Error en   for (; j >= 0 && arreglo[j] > actual; j--)
+    // deberia ser while y deberea ser i envez de j y arreglo en [i] > actual
+    // y luego agregar i -- despues el error tambien esta en  arreglo[j + 1] = arreglo[j] 
+    // porque debe ser i 
+    // Solucion: Se puso el bucle interno a un bucle while poniendolo correctamente
+    // para el algoritmo de inserción ascendente.
+    //  while ( i >= 0 && arreglo[i] > actual) {
+    //  arreglo[i + 1] = arreglo[i];
+    //  i--;
     public int[] insercionSegundo(int[] arregloOriginal) {
 
         int[] arreglo = Arrays.copyOf(arregloOriginal, arregloOriginal.length);
@@ -168,8 +179,9 @@ public class MetodosOrdenamiento {
             int actual = arreglo[j];
 
             int i = j - 1;
-            for (; j >= 0 && arreglo[j] > actual; j--) {
-                arreglo[j + 1] = arreglo[j];
+            while ( i >= 0 && arreglo[i] > actual) {
+                arreglo[i + 1] = arreglo[i];
+                i--;
             }
             arreglo[i + 1] = actual;
         }
@@ -177,21 +189,29 @@ public class MetodosOrdenamiento {
     }
 
     // Método de inserción con errores
-    // Error encontrado:
+    // Error encontrado: En el bucle while falta el = en i > y arreglo[i] < key la condicion es >.
+    // en el bucle whilw  tambein hay error en i++;
+    // el metodo retorna al arreglo. no esto return new int[] { 15, 34, 1, 2, 5, 6, 7, 10 };
+    // y tambien hay error en int i = j;
+    // Solucion: se cambia  int i = j; por int i = j - 1; tambien 
+    // se cambia la condicion arreglo[i] > key 
+    // para oredenar ascendentemente.
+    // el incremento se cambia a i -- y  return new int[] { 15, 34, 1, 2, 5, 6, 7, 10 }; por return arreglo; 
     public int[] insercionTercero(int[] arregloOriginal) {
 
         int[] arreglo = Arrays.copyOf(arregloOriginal, arregloOriginal.length);
         for (int j = 1; j < arreglo.length; j++) {
             int key = arreglo[j];
-            int i = j;
+            
+            int i = j-1;
 
-            while (i > 0 && arreglo[i] < key) {
+            while (i >= 0 && arreglo[i] > key) {
                 arreglo[i + 1] = arreglo[i];
-                i++;
+                i--;
             }
             arreglo[i + 1] = key;
         }
-        return new int[] { 15, 34, 1, 2, 5, 6, 7, 10 };
+        return arreglo;
     }
 
 }
